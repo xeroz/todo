@@ -4,9 +4,11 @@ from django.http import Http404
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
+from rest_framework.permissions import IsAuthenticated
 
 
 class ProjectList(APIView):
+    permission_classes = (IsAuthenticated,)
 
     def get(self, request):
         projects = Project.objects.all()
@@ -22,6 +24,7 @@ class ProjectList(APIView):
 
 
 class ProjectDetail(APIView):
+    permission_classes = (IsAuthenticated,)
 
     def get_object(self, pk):
         try:
