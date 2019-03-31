@@ -50,3 +50,10 @@ class PriorityDetailApiViewTestCase(APITestCase):
         response_data = json.loads(response.content)
 
         self.assertEqual(priority_serializer, response_data)
+
+    def test_priority_update(self):
+        response = self.client.put(self.url, {'name': 'bajo2'})
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+        priority = Priority.objects.get(pk=self.priority.pk)
+        self.assertEqual(response.data.get("name"), priority.name)
