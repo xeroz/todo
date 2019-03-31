@@ -52,8 +52,18 @@ class PriorityDetailApiViewTestCase(APITestCase):
         self.assertEqual(priority_serializer, response_data)
 
     def test_priority_update(self):
+        """
+            Test to verify priority update
+        """
         response = self.client.put(self.url, {'name': 'bajo2'})
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
         priority = Priority.objects.get(pk=self.priority.pk)
         self.assertEqual(response.data.get("name"), priority.name)
+
+    def test_priority_delete(self):
+        """
+            Test to verify priority delete
+        """
+        response = self.client.delete(self.url)
+        self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
