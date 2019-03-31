@@ -8,11 +8,11 @@ import json
 
 class PriorityListApiViewTestCase(APITestCase):
     client = APIClient()
-    url = reverse("tasks:priorities")
 
-    def setup(self):
+    def setUp(self):
         Priority.objects.create(name='alto')
         Priority.objects.create(name='medio')
+        self.url = reverse("tasks:priorities")
 
     def test_priority_list(self):
         """
@@ -35,16 +35,16 @@ class PriorityListApiViewTestCase(APITestCase):
 class PriorityDetailApiViewTestCase(APITestCase):
     client = APIClient()
 
-    def setup(self):
-        self.priority = Priority.objects.create(name='medio')
+    def setUp(self):
+        self.priority = Priority.objects.create(name='bajo')
         self.url = reverse("tasks:priorities_detail", kwargs={"pk": self.priority.pk})
 
-    def test_priority_object_bundle(self):
+    def test_priority_bundle(self):
         """
             Test to verify priority object bundle
         """
         response = self.client.get(self.url)
-        self.assertEqual(200, response.status_code)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
 
         priority_serializer = PrioritySerializer(instance=self.priority).data
         response_data = json.loads(response.content)
