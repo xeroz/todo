@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'corsheaders',
 
     #apps
+    'apps.auth',
     'apps.tasks',
     'apps.users',
 ]
