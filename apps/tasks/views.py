@@ -1,5 +1,6 @@
 from apps.tasks.models import Project, Priority, Incidence
-from apps.tasks.serializers import ProjectSerializer, PrioritySerializer
+from apps.tasks.serializers import (
+    ProjectSerializer, PrioritySerializer, IncidenceSerializer)
 from django.http import Http404
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -100,12 +101,40 @@ class IncidenceList(APIView):
 
     def get(self, request):
         incidence = Incidence.objects.all()
-        incidences_serializer = PrioritySerializer(incidence, many=True)
+        incidences_serializer = IncidenceSerializer(incidence, many=True)
         return Response(incidences_serializer.data)
 
     def post(self, request):
-        priorities_serializer = PrioritySerializer(data=request.data)
-        if priorities_serializer.is_valid():
-            priorities_serializer.save()
-            return Response(priorities_serializer.data, status=status.HTTP_201_CREATED)
-        return Response(priorities_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        incidences_serializer = IncidenceSerializer(data=request.data)
+        if incidences_serializer.is_valid():
+            incidences_serializer.save()
+            return Response(incidences_serializer.data, status=status.HTTP_201_CREATED)
+        return Response(incidences_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class IncidenceDetail(APIView):
+    # permission_classes = (IsAuthenticated,)
+
+    def get_object(self, pk):
+        try:
+            return Incidence.objects.get(pk=pk)
+        except Incidence.DoesNotExist:
+            raise Http404
+
+    def get(self, request, pk):
+        incidence = self.get_object(pk)
+        serializer_incidence = IncidenceSerializer(incidence)
+        return Response(serializer_incidence.data)
+
+    def put(self, request, pk):
+        priority = self.get_object(pk)
+        serializer_incidence = IncidenceSerializer(priority, data=request.data)
+        if serializer_incidence.is_valid():
+            serializer_incidence.save()
+            return Response(serializer_incidence.data)
+        return Response(serializer_incidence.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def delete(self, request, pk):
+        incidence = self.get_object(pk)
+        incidence.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
