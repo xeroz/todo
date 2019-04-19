@@ -1,5 +1,6 @@
 from django.db import models
 from apps.core.models import AuditableModel
+from uuslug import uuslug
 
 
 class Project(AuditableModel):
@@ -7,12 +8,26 @@ class Project(AuditableModel):
 
 
 class Incidence(AuditableModel):
+    slug = models.SlugField(blank=True)
     name = models.CharField(max_length=200)
     project = models.ForeignKey(Project, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.name
+
+    def save(self, *args, **kwargs):
+        self.slug = uuslug(self.name, instance=self)
 
 
 class Sprint(AuditableModel):
     name = models.CharField(max_length=50)
+    slug = models.SlugField(blank=True)
+
+    def __str__(self):
+        return self.name
+
+    def save(self, *args, **kwargs):
+        self.slug = uuslug(self.name, instance=self)
 
 
 class Priority(models.Model):
