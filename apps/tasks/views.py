@@ -1,4 +1,4 @@
-from apps.tasks.models import Project, Priority
+from apps.tasks.models import Project, Priority, Incidence
 from apps.tasks.serializers import ProjectSerializer, PrioritySerializer
 from django.http import Http404
 from rest_framework.views import APIView
@@ -93,3 +93,19 @@ class PriorityDetail(APIView):
         priority = self.get_object(pk)
         priority.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+
+
+class IncidenceList(APIView):
+    # permission_classes = (IsAuthenticated,)
+
+    def get(self, request):
+        incidence = Incidence.objects.all()
+        incidences_serializer = PrioritySerializer(incidence, many=True)
+        return Response(incidences_serializer.data)
+
+    def post(self, request):
+        priorities_serializer = PrioritySerializer(data=request.data)
+        if priorities_serializer.is_valid():
+            priorities_serializer.save()
+            return Response(priorities_serializer.data, status=status.HTTP_201_CREATED)
+        return Response(priorities_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
