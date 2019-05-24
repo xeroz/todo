@@ -1,15 +1,17 @@
-from django.urls import path
-from .views import ProjectList, ProjectDetail, PriorityList, PriorityDetail
-from rest_framework.urlpatterns import format_suffix_patterns
+from django.urls import path, include
+from .views import ProjectViewSet, PriorityList, PriorityDetail, IncidenceViewSet
+from rest_framework.routers import DefaultRouter
 
 app_name = 'tasks'
 
+
+router = DefaultRouter()
+router.register('projects', ProjectViewSet)
+router.register('incidents', IncidenceViewSet)
+
 urlpatterns = [
-    path('projects', ProjectList.as_view()),
-    path('projects/<int:pk>', ProjectDetail.as_view()),
+    path('', include(router.urls)),
     path('priorities', PriorityList.as_view(), name='priorities'),
     path('priorities/<int:pk>', PriorityDetail.as_view(), name='priorities_detail'),
 
 ]
-
-urlpatterns = format_suffix_patterns(urlpatterns)
