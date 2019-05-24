@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Project, Priority, Incidence
+from .models import Project, Priority, Incidence, Sprint
 
 
 class ProjectSerializer(serializers.ModelSerializer):
@@ -27,3 +27,10 @@ class IncidenceSerializer(serializers.ModelSerializer):
     class Meta:
         model = Incidence
         fields = ('id', 'slug', 'name', 'project')
+
+
+class SprintSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Sprint
+        fields = ('id', 'slug', 'name')

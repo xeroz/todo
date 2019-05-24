@@ -7,6 +7,9 @@ class Project(AuditableModel):
     name = models.CharField(max_length=100)
     slug = models.SlugField(blank=True)
 
+    def __str__(self):
+        return self.name
+
 
 class Incidence(AuditableModel):
     slug = models.SlugField(blank=True)

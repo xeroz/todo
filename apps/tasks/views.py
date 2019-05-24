@@ -1,6 +1,8 @@
-from apps.tasks.models import Project, Priority, Incidence
+from apps.tasks.models import (
+    Project, Priority, Incidence, Sprint)
 from apps.tasks.serializers import (
-    ProjectSerializer, PrioritySerializer, IncidenceSerializer)
+    ProjectSerializer, PrioritySerializer, IncidenceSerializer,
+    SprintSerializer)
 from django.http import Http404
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -62,3 +64,9 @@ class IncidenceViewSet(viewsets.ModelViewSet):
     # permission_classes = (IsAuthenticated,)
     queryset = Incidence.objects.all()
     serializer_class = IncidenceSerializer
+
+
+class SprintViewSet(viewsets.ModelViewSet):
+    # permission_classes = (IsAuthenticated,)
+    queryset = Sprint.objects.all()
+    serializer_class = SprintSerializer
