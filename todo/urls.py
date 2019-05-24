@@ -17,9 +17,14 @@ from django.contrib import admin
 from django.urls import path, include
 from rest_framework_simplejwt import views as jwt_views
 from apps.users import views
+from rest_framework_swagger.views import get_swagger_view
+
+
+schema_view = get_swagger_view(title='APIS')
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('', schema_view),
     path('api/token/refresh/', jwt_views.TokenRefreshView.as_view(), name='token_refresh'),
     path('hello/', views.HelloView.as_view(), name='hello'),
     path('', include('apps.tasks.urls'), name='tasks'),

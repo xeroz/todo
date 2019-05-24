@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     #third apps
     'rest_framework',
     'corsheaders',
+    'rest_framework_swagger',
 
     #apps
     'apps.tasks',

@@ -53,7 +53,7 @@ class ProjectDetail(APIView):
 
 
 class PriorityList(APIView):
-    # permission_classes = (IsAuthenticated,)
+    permission_classes = (IsAuthenticated,)
 
     def get(self, request):
         priorities = Priority.objects.all()
