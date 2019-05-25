@@ -1,8 +1,9 @@
 from apps.tasks.models import (
-    Project, Priority, Incidence, Sprint)
+    Project, Priority, Incidence, Sprint,
+    StatusTask, Task)
 from apps.tasks.serializers import (
     ProjectSerializer, PrioritySerializer, IncidenceSerializer,
-    SprintSerializer)
+    SprintSerializer, StatusTaskSerializer, TaskSerializer)
 from django.http import Http404
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -70,3 +71,15 @@ class SprintViewSet(viewsets.ModelViewSet):
     # permission_classes = (IsAuthenticated,)
     queryset = Sprint.objects.all()
     serializer_class = SprintSerializer
+
+
+class StatusTaskViewSet(viewsets.ModelViewSet):
+    # permission_classes = (IsAuthenticated,)
+    queryset = StatusTask.objects.all()
+    serializer_class = StatusTaskSerializer
+
+
+class TaskViewSet(viewsets.ModelViewSet):
+    # permission_classes = (IsAuthenticated,)
+    queryset = Task.objects.all()
+    serializer_class = TaskSerializer
