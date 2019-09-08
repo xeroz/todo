@@ -4,10 +4,7 @@ from apps.tasks.models import (
 from apps.tasks.serializers import (
     ProjectSerializer, PrioritySerializer, IncidenceSerializer,
     SprintSerializer, StatusTaskSerializer, TaskSerializer)
-from django.http import Http404
-from rest_framework.views import APIView
-from rest_framework.response import Response
-from rest_framework import status, viewsets
+from rest_framework import viewsets
 from rest_framework.permissions import IsAuthenticated
 
 
@@ -20,7 +17,7 @@ class ProjectViewSet(viewsets.ModelViewSet):
 class PriorityViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticated]
     queryset = Priority.objects.all()
-    serializer_class = ProjectSerializer
+    serializer_class = PrioritySerializer
 
 
 class IncidenceViewSet(viewsets.ModelViewSet):

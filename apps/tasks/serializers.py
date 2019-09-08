@@ -11,10 +11,10 @@ class ProjectSerializer(serializers.ModelSerializer):
         fields = ('id', 'name', 'slug')
 
 
-class PrioritySerializer(serializers.Serializer):
+class PrioritySerializer(serializers.ModelSerializer):
 
     class Meta:
-        model = Project
+        model = Priority
         fields = ('id', 'name')
 
 
